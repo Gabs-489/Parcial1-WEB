@@ -1,0 +1,122 @@
+"use client"; 
+import React, { useState, useEffect } from 'react';
+import ImagenesExternas from './imagenesExternas';
+import Link from "next/link";
+
+/*
+interface Editorial {
+    id: number;
+    name: string;
+}
+interface Book{
+    id: number;
+    name: string;
+    isbn: string;
+    image: string;
+    publishingDate: string;
+    description: string;
+    editorial: Editorial;
+}*/
+
+interface Autor {
+    id: number;
+    birthDate: string;
+    name: string;
+    description: string;
+    image: string;
+}
+
+const ListaAutores = () => {
+    const [autores, setAutores] = useState<Autor[]>([]);
+    const [update,setUpdate] = useState(false);
+
+    useEffect(() => {
+        const fetchAutores = async () =>{
+            try {
+                const response = await fetch("http://127.0.0.1:8080/api/authors", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type" : "application/json"
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Error en la conexión con la API');
+                }
+                const data = await response.json();
+                setAutores(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchAutores();
+    }, [update]);
+
+    const borrarAutor = async (id: number) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type" : "application/json"
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Error en la conexión con la API');
+            }else{
+                alert("Autor eliminado exitosamente");
+                setUpdate(!update)
+            }
+            } catch (error) {
+                console.error(error);
+            }
+    }
+
+    return (
+        <div className="p-4 justify-center items-center">
+            <h2 className='text-xl font-bold p-2 pb-4'>Lista de Autores</h2>
+        
+
+            <div className='overflow-x-auto mb-4 w-[80rem] mx-auto'>
+                <table  className="min-w-full border border-gray-100 divide-y divide-gray-200">
+                    <thead className="bg-blue-900 text-white">
+                        <tr>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Nombre </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Fecha de Nacimiento </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Descripción </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Imagen </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Editar </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Eliminar </th>
+                        </tr>
+
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {autores.map(autor => (
+                            <tr key={autor.id} className='hover:bg-blue-50'>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{autor.name}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{autor.birthDate}</td>
+                                <td className='px-6 py-4 text-sm text-gray-900'>{autor.description}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                    <ImagenesExternas src={autor.image} alt={autor.name} width={64} height={64} />
+                                </td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                    <Link href={`/authors/${autor.id}`} className='p-2  bg-blue-800 text-white rounded hover:bg-blue-900'>
+                                            Editar
+                                    </Link>
+                                </td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                    <button onClick={() => borrarAutor(autor.id)}>
+                                        <Link href="#" className='p-2  bg-red-800 text-white rounded hover:bg-red-900'>
+                                            Borrar Autor
+                                        </Link>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    );
+}
+
+export default ListaAutores;
