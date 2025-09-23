@@ -1,4 +1,4 @@
-import ListaAutores from "../components/lista_autores";
+import ListaAutores from "../../components/lista_autores";
 
 export default function Authors() {
     return (

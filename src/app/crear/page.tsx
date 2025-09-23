@@ -1,5 +1,5 @@
 import React from 'react';
-import FormCrearAu from '../components/formCrearAu';
+import FormCrearAu from '../../components/formCrearAu';
 
 export default function CrearAutor() {
     return (

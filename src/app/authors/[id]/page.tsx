@@ -1,4 +1,4 @@
-import FormActualizarAu from "@/app/components/formActualizarrAu";
+import FormActualizarAu from "@/components/formActualizarrAu";
 import { notFound } from "next/navigation";
 
 interface Params {
