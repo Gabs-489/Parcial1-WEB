@@ -29,6 +29,8 @@ interface Autor {
 const ListaAutores = () => {
     const [autores, setAutores] = useState<Autor[]>([]);
     const [update,setUpdate] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchAutores = async () =>{
@@ -45,8 +47,13 @@ const ListaAutores = () => {
                 const data = await response.json();
                 setAutores(data);
             } catch (error) {
-                console.error(error);
-            }
+                console.log(error);
+                setError(
+                    "No se pudieron cargar los servicios. Por favor, intente más tarde."
+                );
+            } finally {
+                setIsLoading(false);
+            } 
         }
         fetchAutores();
     }, [update]);
@@ -68,6 +75,18 @@ const ListaAutores = () => {
             } catch (error) {
                 console.error(error);
             }
+    }
+
+    if (isLoading) {
+    return <div className="text-center p-8">
+            <h1 className='font-bold text-xl'>
+                Cargando autores...
+            </h1>
+        </div>;
+    }
+
+    if (error) {
+        return <div className="text-center p-8 text-red-500">{error}</div>;
     }
 
     return (
