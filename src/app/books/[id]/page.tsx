@@ -32,7 +32,8 @@ const EditarAutor = async ({ params }: Params) => {
                 isbn={datosAutor.isbn}
                 publishingDate={datosAutor.publishingDate}
                 description={datosAutor.description}
-                image={datosAutor.image}        
+                image={datosAutor.image}  
+                reviews = {datosAutor.reviews}     
             />
         </div>
     )

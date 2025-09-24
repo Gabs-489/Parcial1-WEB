@@ -100,8 +100,13 @@ const FormCrearAu = () => {
                 body: JSON.stringify(payloadBook)
             });
 
+            console.log(book);
 
-            const response = await fetch( "http://127.0.0.1:8080/api/authors" , {
+            if (!book.ok) throw new Error("Error creando libro");
+            const bookInfo = await book.json();
+
+
+            const autor = await fetch( "http://127.0.0.1:8080/api/authors" , {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -109,17 +114,29 @@ const FormCrearAu = () => {
                 body: JSON.stringify(payloadAutor)
             });
 
-            if (!response.ok) {
-                const responseText = await response.text();
-                console.log("Response error:", responseText);
-            }else{
-                const result = await response.json();
-                console.log("Respuesta del servidor:", result);
-                alert("Autor creado exitosamente");
-                reset();
+            if (!autor.ok) throw new Error("Error creando autor");
+            const autorInfo = await autor.json();
 
-            }
+            await fetch(
+                `http://127.0.0.1:8080/api/authors/${autorInfo.id}/books/${bookInfo.id}`,
+                { method: "POST" }
+            );
 
+            const prize = await fetch( "http://127.0.0.1:8080/api/prizes" , {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payloadPremio)
+            });
+
+            if (!prize.ok) throw new Error("Error creando premio");
+            const prizeInfo = await prize.json();
+
+            await fetch(
+                `http://127.0.0.1:8080/api/prizes/${prizeInfo.id}/author/${autorInfo.id}`,
+                { method: "POST" }
+            );
 
         } catch (error) {
             console.error("Error:", error);
