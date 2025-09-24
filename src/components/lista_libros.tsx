@@ -18,25 +18,16 @@ interface Book{
     editorial: Editorial;
 }
 
-interface Autor {
-    id: number;
-    birthDate: string;
-    name: string;
-    description: string;
-    image: string;
-    books: Book[];
-}
-
-const ListaAutores = () => {
-    const [autores, setAutores] = useState<Autor[]>([]);
+const ListaLibros = () => {
+    const [libros, setLibros] = useState<Book[]>([]);
     const [update,setUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchAutores = async () =>{
+        const fetchLibros = async () =>{
             try {
-                const response = await fetch("http://127.0.0.1:8080/api/authors", {
+                const response = await fetch("http://127.0.0.1:8080/api/books", {
                     method: "GET",
                     headers: {
                         "Content-Type" : "application/json"
@@ -46,7 +37,7 @@ const ListaAutores = () => {
                     throw new Error('Error en la conexión con la API');
                 }
                 const data = await response.json();
-                setAutores(data);
+                setLibros(data);
             } catch (error) {
                 console.log(error);
                 setError(
@@ -56,32 +47,14 @@ const ListaAutores = () => {
                 setIsLoading(false);
             } 
         }
-        fetchAutores();
+        fetchLibros();
     }, [update]);
 
-    const borrarAutor = async (id: number) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Error en la conexión con la API');
-            }else{
-                alert("Autor eliminado exitosamente");
-                setUpdate(!update)
-            }
-            } catch (error) {
-                console.error(error);
-            }
-    }
 
     if (isLoading) {
     return <div className="text-center p-8">
             <h1 className='font-bold text-xl'>
-                Cargando autores...
+                Cargando libros...
             </h1>
         </div>;
     }
@@ -92,7 +65,7 @@ const ListaAutores = () => {
 
     return (
         <div className="p-4 justify-center items-center">
-            <h2 className='text-xl font-bold p-2 pb-4'>Lista de Autores</h2>
+            <h2 className='text-xl font-bold p-2 pb-4'>Lista de libros</h2>
         
 
             <div className='overflow-x-auto mb-4 w-[80rem] mx-auto'>
@@ -100,34 +73,28 @@ const ListaAutores = () => {
                     <thead className="bg-blue-900 text-white">
                         <tr>
                             <th className='px-6 py-2 text-center text-m font-medium'> Nombre </th>
-                            <th className='px-6 py-2 text-center text-m font-medium'> Fecha de Nacimiento </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Isbn </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Fecha de Publicacion </th>
                             <th className='px-6 py-2 text-center text-m font-medium'> Descripción </th>
                             <th className='px-6 py-2 text-center text-m font-medium'> Imagen </th>
-                            <th className='px-6 py-2 text-center text-m font-medium'> Editar </th>
-                            <th className='px-6 py-2 text-center text-m font-medium'> Eliminar </th>
+                            <th className='px-6 py-2 text-center text-m font-medium'> Detalle </th>
                         </tr>
 
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {autores.map(autor => (
-                            <tr key={autor.id} className='hover:bg-blue-50'>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{autor.name}</td>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{autor.birthDate}</td>
-                                <td className='px-6 py-4 text-sm text-gray-900'>{autor.description}</td>
+                        {libros.map(libro => (
+                            <tr key={libro.id} className='hover:bg-blue-50'>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{libro.name}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{libro.isbn}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{libro.publishingDate}</td>
+                                <td className='px-6 py-4 text-sm text-gray-900'>{libro.description}</td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    <ImagenesExternas src={autor.image} alt={autor.name} width={64} height={64} />
+                                    <ImagenesExternas src={libro.image} alt={libro.name} width={64} height={64} />
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    <Link href={`/authors/${autor.id}`} className='p-2  bg-blue-800 text-white rounded hover:bg-blue-900'>
-                                            Editar
+                                    <Link href={`/books/${libro.id}`} className='p-2  bg-blue-800 text-white rounded hover:bg-blue-900'>
+                                            Detalles
                                     </Link>
-                                </td>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    <button onClick={() => borrarAutor(autor.id)}>
-                                        <Link href="#" className='p-2  bg-red-800 text-white rounded hover:bg-red-900'>
-                                            Borrar Autor
-                                        </Link>
-                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -139,4 +106,4 @@ const ListaAutores = () => {
     );
 }
 
-export default ListaAutores;
+export default ListaLibros;

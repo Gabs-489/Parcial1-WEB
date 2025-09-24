@@ -11,6 +11,9 @@ const NavBar = () => {
                 <Link href="/crear" className="px-3 hover:text-gray-500">
                     Crear Autor
                 </Link>
+                 <Link href="/books" className="px-3 hover:text-gray-500">
+                    Libros
+                </Link>
 
             </nav>
         </div>
