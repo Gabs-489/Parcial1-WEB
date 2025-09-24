@@ -85,7 +85,7 @@ const FormResenia = ({idLibro}:FormProps) =>{
                     {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                 </div>
 
-                <button type='submit' className='bg-blue-500 text-white font-bold py-2 px-4 rounded'>Crear Autor</button>
+                <button type='submit' className='bg-blue-500 text-white font-bold py-2 px-4 rounded'>Crear Reseña</button>
 
         </form>
       </div>
