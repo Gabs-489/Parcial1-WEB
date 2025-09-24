@@ -54,7 +54,7 @@ const DetalleLibro = ({idLibro,name,isbn,publishingDate,description,image}:FormP
         console.log("Post Login data:", payload)
         console.log("JSON data:", JSON.stringify(payload))
         try{   
-            const response = await fetch( `http://127.0.0.1:8080/api/authors/${idLibro}` , {
+            const response = await fetch( `http://127.0.0.1:8080/api/books/${idLibro}` , {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -91,29 +91,6 @@ const DetalleLibro = ({idLibro,name,isbn,publishingDate,description,image}:FormP
             </div>
 
 
-
-            <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 mx-auto p-4 border border-gray-300 rounded">
-                <div className="mb-4">
-                    <label className='block text-gray-700 font-bold mb-2' htmlFor='name'>Nombre:</label>
-                    <input type='text' defaultValue={name} {...register("name")} className='w-full p-2 border border-gray-300 rounded'/>
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-                </div>
-
-                <div className="mb-4">
-                    <label className='block text-gray-700 font-bold mb-2' htmlFor='description'>Descripción:</label>
-                    <textarea  defaultValue={description} {...register("description")} className='w-full p-2 border border-gray-300 rounded' />
-                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
-                </div>
-                <div className="mb-4">
-                    <label className='block text-gray-700 font-bold mb-2' htmlFor='image'>Imagen (URL):</label>
-                    <input type='text' defaultValue={image} {...register("image")} className='w-full p-2 border border-gray-300 rounded' />
-                    {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
-                </div>
-
-                <button type='submit' className='bg-blue-500 text-white font-bold py-2 px-4 rounded'>
-                    Actualizar Autor
-                </button>
-            </form>
         </div>
     )
 }

@@ -11,7 +11,7 @@ interface Params {
 const EditarAutor = async ({ params }: Params) => {
     const { id } = await params;
 
-    const respuesta = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+    const respuesta = await fetch(`http://127.0.0.1:8080/api/books/${id}`, {
         method:"GET",
         cache: "no-store", 
     });
