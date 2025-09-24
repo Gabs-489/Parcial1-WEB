@@ -86,7 +86,7 @@ const FormCrearAu = () => {
             name : data.namePrice,
             premiationDate: new Date(data.premiationDate).toISOString(),// ejemplo: 18626...
             description: data.descrptionPrice,
-            organization: {"id":1000,"name":"org1","tipo":"PUBLICA"}
+            organization: {"id":1000,"name":"org3","tipo":"PUBLICA"}
         }
 
 
