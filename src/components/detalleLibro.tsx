@@ -4,6 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import ImagenesExternas from "./imagenesExternas";
 
 const schema = z.object({
     name: z.string().min(1,"El nombre es obligatorio"),
@@ -87,6 +88,7 @@ const DetalleLibro = ({idLibro,name,isbn,publishingDate,description,image}:FormP
                 <h1>Isbn libro: {isbn}</h1>
                 <h1>Descripción libro: {description}</h1>
                 <h1>Fecha Publicacion libro: {publishingDate}</h1>
+                <ImagenesExternas src={image} alt={name} width={120} height={120} />
 
             </div>
 
