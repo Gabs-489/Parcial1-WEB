@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: parcial-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: https://github.com/Gabs-489/bookstore-back.git
+      dockerfile: Dockerfile
+    container_name: parcial-backend
+    ports:
+      - "8080:8080"
