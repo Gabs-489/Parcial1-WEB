@@ -14,9 +14,7 @@ services:
       - backend
 
   backend:
-    build:
-      context: https://github.com/Gabs-489/bookstore-back.git
-      dockerfile: Dockerfile
+    image: bookstore  
     container_name: parcial-backend
     ports:
       - "8080:8080"
