@@ -35,6 +35,7 @@ type Inputs = {
 
 const FormActualizarAu = ({idAutor,name,birthDate,description,image}:FormProp) => {
     const router = useRouter();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const {
         register,
@@ -53,7 +54,7 @@ const FormActualizarAu = ({idAutor,name,birthDate,description,image}:FormProp) =
         console.log("Post Login data:", payload)
         console.log("JSON data:", JSON.stringify(payload))
         try{   
-            const response = await fetch( `http://127.0.0.1:8080/api/authors/${idAutor}` , {
+            const response = await fetch( `${apiUrl}/api/authors/${idAutor}` , {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

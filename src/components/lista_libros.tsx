@@ -23,11 +23,12 @@ const ListaLibros = () => {
     const [update,setUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         const fetchLibros = async () =>{
             try {
-                const response = await fetch("http://127.0.0.1:8080/api/books", {
+                const response = await fetch(`${apiUrl}/api/books`, {
                     method: "GET",
                     headers: {
                         "Content-Type" : "application/json"

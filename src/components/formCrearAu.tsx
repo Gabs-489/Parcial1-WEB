@@ -71,6 +71,8 @@ type Inputs = {
 };
 
 const FormCrearAu = () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     const {
         register,
         handleSubmit,
@@ -113,7 +115,7 @@ const FormCrearAu = () => {
 
         try{   
 
-            const book = await fetch("http://127.0.0.1:8080/api/books", {
+            const book = await fetch(`${apiUrl}/api/books`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -126,7 +128,7 @@ const FormCrearAu = () => {
             const bookInfo = await book.json();
 
 
-            const autor = await fetch( "http://127.0.0.1:8080/api/authors" , {
+            const autor = await fetch( `${apiUrl}/api/authors` , {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -138,13 +140,13 @@ const FormCrearAu = () => {
             const autorInfo = await autor.json();
 
             await fetch(
-                `http://127.0.0.1:8080/api/authors/${autorInfo.id}/books/${bookInfo.id}`,
+                `${apiUrl}/api/authors/${autorInfo.id}/books/${bookInfo.id}`,
                 { method: "POST" }
             );
 
             console.log("Organization: " ,payloadOrg);
 
-            const org = await fetch( "http://127.0.0.1:8080/api/organizations" , {
+            const org = await fetch( `${apiUrl}/api/organizations` , {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -158,7 +160,7 @@ const FormCrearAu = () => {
 
             payloadPremio.organization = orgInfo;
 
-            const prize = await fetch( "http://127.0.0.1:8080/api/prizes" , {
+            const prize = await fetch( `${apiUrl}/api/prizes` , {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -170,7 +172,7 @@ const FormCrearAu = () => {
             const prizeInfo = await prize.json();
 
             await fetch(
-                `http://127.0.0.1:8080/api/prizes/${prizeInfo.id}/author/${autorInfo.id}`,
+                `${apiUrl}/api/prizes/${prizeInfo.id}/author/${autorInfo.id}`,
                 { method: "POST" }
             );
 

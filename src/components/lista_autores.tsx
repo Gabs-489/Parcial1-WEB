@@ -32,11 +32,12 @@ const ListaAutores = () => {
     const [update,setUpdate] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         const fetchAutores = async () =>{
             try {
-                const response = await fetch("http://127.0.0.1:8080/api/authors", {
+                const response = await fetch(`${apiUrl}/api/authors`, {
                     method: "GET",
                     headers: {
                         "Content-Type" : "application/json"
@@ -61,7 +62,7 @@ const ListaAutores = () => {
 
     const borrarAutor = async (id: number) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+            const response = await fetch(`${apiUrl}/api/authors/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type" : "application/json"

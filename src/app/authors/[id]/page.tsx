@@ -9,8 +9,8 @@ interface Params {
 
 const EditarAutor = async ({ params }: Params) => {
     const { id } = await params;
-
-    const respuesta = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const respuesta = await fetch(`${apiUrl}/api/authors/${id}`, {
         method:"GET",
         cache: "no-store", 
     });

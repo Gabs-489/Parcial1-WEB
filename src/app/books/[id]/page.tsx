@@ -1,5 +1,4 @@
 import DetalleLibro from "@/components/detalleLibro";
-import FormActualizarAu from "@/components/formActualizarrAu";
 import { notFound } from "next/navigation";
 
 interface Params {
@@ -9,9 +8,11 @@ interface Params {
 }
 
 const EditarAutor = async ({ params }: Params) => {
-    const { id } = await params;
+    const { id } =  params;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const respuesta = await fetch(`http://127.0.0.1:8080/api/books/${id}`, {
+
+    const respuesta = await fetch(`${apiUrl}/api/books/${id}`, {
         method:"GET",
         cache: "no-store", 
     });

@@ -35,11 +35,13 @@ const FormResenia = ({idLibro}:FormProps) =>{
     
     const onSubmit = async (data: Inputs) => {
         console.log("Login data:", data)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
         const payload = {
             ...data,
         }
         try{   
-            const response = await fetch( `http://127.0.0.1:8080/api/books/${idLibro}/reviews` , {
+            const response = await fetch( `${apiUrl}/api/books/${idLibro}/reviews` , {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
