@@ -115,7 +115,7 @@ const ListaAutores = () => {
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{autor.birthDate}</td>
                                 <td className='px-6 py-4 text-sm text-gray-900'>{autor.description}</td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    <ImagenesExternas src={autor.image} alt={autor.name} width={64} height={64} />
+                                    <ImagenesExternas src={autor.image} alt={autor.name} width={120} height={120} />
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                                     <Link href={`/authors/${autor.id}`} className='p-2  bg-blue-800 text-white rounded hover:bg-blue-900'>

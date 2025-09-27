@@ -5,6 +5,14 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
+
+//Para verificar si existe una organizacion con ese nombre 
+async function existeOrg(nombre: string): Promise<boolean> {
+  const res = await fetch(`http://127.0.0.1:8080/api/organizations?name=${nombre}`)
+  const data: unknown = await res.json()
+  return (data as { name: string }[]).some((org) => org.name === nombre) // true si ya existe
+}
+
 const schema = z.object({
     name: z.string().min(1,"El nombre es obligatorio"),
     birthDate: z.string().min(1).refine( (val) => {
@@ -36,6 +44,12 @@ const schema = z.object({
     }),
     namePrice: z.string().min(1,"El nombre del premio es obligatorio."),
     descrptionPrice: z.string().min(1,"La descripción es obligatoria").max(255, "La descripción no puede tener más de 255 caracteres"),
+    nameOrg: z.string().min(1, "El nombre de la organización es obligatorio.").refine(async (value) => !(await existeOrg(value)), {
+        message: "Ya existe una organización con este nombre.",
+        }),
+    tipoOrg: z.enum(["PRIVADA", "PUBLICA", "FUNDACION"], {
+         message: "Debes seleccionar un tipo de organización válido"
+    }),
 
 })
 
@@ -44,7 +58,7 @@ type Inputs = {
   birthDate: string; 
   description: string;
   image: string;   
-  nameBook: string;
+  nameBook: string; 
   isbn: string;
   imageBook: string;
   publishingDate: string;
@@ -52,6 +66,8 @@ type Inputs = {
   premiationDate: string;
   namePrice: string;
   descrptionPrice: string;
+  nameOrg: string;
+  tipoOrg: "PRIVADA" | "PUBLICA" | "FUNDACION";
 };
 
 const FormCrearAu = () => {
@@ -65,7 +81,6 @@ const FormCrearAu = () => {
     })
 
     const onSubmit = async (data: Inputs) => {
-        console.log("Login data:", data)
         const payloadAutor = {
             name : data.name,
             birthDate: new Date(data.birthDate).toISOString(),// ejemplo: 18626...
@@ -82,11 +97,17 @@ const FormCrearAu = () => {
             editorial: {"id":1000,"name":"BLOOMSBURY"}
         }
 
+        const payloadOrg = {
+            name : data.nameOrg,
+            tipo: data.tipoOrg
+        }
+
         const payloadPremio = {
             name : data.namePrice,
             premiationDate: new Date(data.premiationDate).toISOString(),// ejemplo: 18626...
             description: data.descrptionPrice,
-            organization: {"id":1000,"name":"org3","tipo":"PUBLICA"}
+            organization: ""
+
         }
 
 
@@ -100,7 +121,6 @@ const FormCrearAu = () => {
                 body: JSON.stringify(payloadBook)
             });
 
-            console.log(book);
 
             if (!book.ok) throw new Error("Error creando libro");
             const bookInfo = await book.json();
@@ -122,6 +142,22 @@ const FormCrearAu = () => {
                 { method: "POST" }
             );
 
+            console.log("Organization: " ,payloadOrg);
+
+            const org = await fetch( "http://127.0.0.1:8080/api/organizations" , {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payloadOrg)
+            });
+            
+            console.log(org)
+            if (!org.ok) throw new Error("Error creando organización");
+            const orgInfo = await org.json();
+
+            payloadPremio.organization = orgInfo;
+
             const prize = await fetch( "http://127.0.0.1:8080/api/prizes" , {
                 method: "POST",
                 headers: {
@@ -138,6 +174,9 @@ const FormCrearAu = () => {
                 { method: "POST" }
             );
 
+        alert("Autor creado efectivamente!")
+        reset()
+        
         } catch (error) {
             console.error("Error:", error);
         }
@@ -218,6 +257,31 @@ const FormCrearAu = () => {
                     <textarea  {...register("descrptionPrice")} className='w-full p-2 border border-gray-300 rounded' />
                     {errors.descrptionPrice && <p className="text-red-500 text-sm mt-1">{errors.descrptionPrice.message}</p>}
                 </div>
+
+                <h1>Organizacion: </h1>
+                <div className="mb-4">
+                    <label className='block text-gray-700 font-bold mb-2' htmlFor='nameOrg'>Nombre de la Organización:</label>
+                    <input type='text' {...register("nameOrg")} className='w-full p-2 border border-gray-300 rounded' />
+                    {errors.nameOrg && <p className="text-red-500 text-sm mt-1">{errors.nameOrg.message}</p>}
+                </div>
+
+                <div className="mb-4">
+                    <label className='block text-gray-700 font-bold mb-2' htmlFor='tipoOrg'>Tipo de Organización:</label>
+                    <select {...register("tipoOrg")} className="w-full p-2 border border-gray-300 rounded" defaultValue="" >
+                        <option value="" disabled>
+                            -- Selecciona una opción --
+                        </option>
+                        <option value="PRIVADA">Privada</option>
+                        <option value="PUBLICA">Publica</option>
+                        <option value="FUNDACION">Fundacion</option>
+                        </select>
+                        {errors.tipoOrg && (
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.tipoOrg.message}
+                        </p>
+                        )}
+                </div>
+
 
                 <button type='submit' className='bg-blue-500 text-white font-bold py-2 px-4 rounded'>Crear Autor</button>
             </form>

@@ -54,7 +54,7 @@ const FormResenia = ({idLibro}:FormProps) =>{
                 const result = await response.json();
                 console.log("Respuesta del servidor:", result);
                 alert("Reseña creada exitosamente");
-                router.push(`/book/${idLibro}`);
+                router.push(`/books/${idLibro}`);
 
             }
         } catch (error) {

@@ -84,12 +84,12 @@ const ListaLibros = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                         {libros.map(libro => (
                             <tr key={libro.id} className='hover:bg-blue-50'>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{libro.name}</td>
+                                <td className='px-6 py-4  text-sm text-gray-900 '>{libro.name}</td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 '>{libro.isbn}</td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{libro.publishingDate}</td>
                                 <td className='px-6 py-4 text-sm text-gray-900'>{libro.description}</td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    <ImagenesExternas src={libro.image} alt={libro.name} width={64} height={64} />
+                                    <ImagenesExternas src={libro.image} alt={libro.name} width={120} height={120} />
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                                     <Link href={`/books/${libro.id}`} className='p-2  bg-blue-800 text-white rounded hover:bg-blue-900'>

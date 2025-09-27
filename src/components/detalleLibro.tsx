@@ -31,14 +31,20 @@ const DetalleLibro = ({idLibro,name,isbn,publishingDate,description,image,review
 
 
     return (
-        <div className="p-4 justify-center items-center flex flex-col">
+        <div className="p-4 px-10 justify-center flex flex-col">
             <div>
-                <h1 className="py-4 text-lg font-bold" >Nombre libro: </h1> <p>{name}</p>
-                <h1 className="py-4 text-lg font-bold" >Isbn libro: </h1> <p>{isbn}</p>
-                <h1 className="py-4 text-lg font-bold" >Descripción libro: </h1> <p>{description}</p>
-                <h1 className="py-4 text-lg font-bold" >Fecha Publicacion libro: </h1> <p>{publishingDate}</p>
-                <div className="py-4">
-                    <ImagenesExternas src={image} alt={name} width={120} height={120} />
+                <div className="flex gap-20 ">
+                    <div>
+                        <h1 className="py-4 text-lg font-bold" >Nombre libro: </h1> <p>{name}</p>
+                        <h1 className="py-4 text-lg font-bold" >Isbn libro: </h1> <p>{isbn}</p>
+                        <h1 className="py-4 text-lg font-bold " >Descripción libro: </h1> <p className="w-[30rem]">{description}</p>
+                        <h1 className="py-4 text-lg font-bold" >Fecha Publicacion libro: </h1> <p>{publishingDate}</p>
+                    </div>
+                    <div className="">
+                        <div className="py-4">
+                            <ImagenesExternas src={image} alt={name} width={200} height={200} />
+                        </div>
+                    </div>
                 </div>
                 <h1 className="py-4 font-bold">Reseñas:</h1>
                 <div>

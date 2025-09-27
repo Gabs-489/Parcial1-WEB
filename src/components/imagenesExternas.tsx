@@ -14,7 +14,7 @@ interface ImageProps {
 const ImagenesExternas = ({ src, alt, width, height }: ImageProps) => {
   return (
     <Image
-        className='w-40 h-40 object-cover'
+        className={`w-${width} h-${height} object-cover`}
         loader={myLoader}
         src={src}
         alt={alt}
