@@ -70,6 +70,7 @@ const ListaAutores = () => {
                 }
             });
             if (!response.ok) {
+                alert("Error al eliminar el autor");
                 throw new Error('Error en la conexión con la API');
             }else{
                 alert("Autor eliminado exitosamente");
@@ -97,7 +98,7 @@ const ListaAutores = () => {
             <h2 className='text-xl font-bold p-2 pb-4'>Lista de Autores</h2>
         
 
-            <div className='overflow-x-auto mb-4 w-[80rem] mx-auto'>
+            <div className="overflow-x-auto mb-4 w-full">
                 <table  className="min-w-full border border-gray-100 divide-y divide-gray-200">
                     <thead className="bg-blue-900 text-white">
                         <tr>
