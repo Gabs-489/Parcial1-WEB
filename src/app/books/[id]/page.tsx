@@ -13,7 +13,7 @@ const MostrarDetalleLibro = async ({ params }: Params) => {
     console.log(apiUrl)
 
 
-    const respuesta = await fetch(`http://backend:8080/api/books/${id}`, {
+    const respuesta = await fetch(`${apiUrl}/api/books/${id}`, {
         method:"GET",
         cache: "no-store", 
     });
