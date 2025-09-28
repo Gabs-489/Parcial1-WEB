@@ -69,7 +69,7 @@ const ListaLibros = () => {
             <h2 className='text-xl font-bold p-2 pb-4'>Lista de libros</h2>
         
 
-            <div className='overflow-x-auto mb-4 w-[80rem] mx-auto'>
+           <div className="overflow-x-auto mb-4 w-full">
                 <table  className="min-w-full border border-gray-100 divide-y divide-gray-200">
                     <thead className="bg-blue-900 text-white">
                         <tr>
