@@ -7,13 +7,13 @@ interface Params {
   };
 }
 
-const EditarAutor = async ({ params }: Params) => {
+const MostrarDetalleLibro = async ({ params }: Params) => {
     const { id } =  params;
     const apiUrl = process.env.INTERNAL_API_URL;
     console.log(apiUrl)
 
 
-    const respuesta = await fetch(`${apiUrl}/api/books/${id}`, {
+    const respuesta = await fetch(`http://backend:8080/api/books/${id}`, {
         method:"GET",
         cache: "no-store", 
     });
@@ -42,4 +42,4 @@ const EditarAutor = async ({ params }: Params) => {
 
 }
 
-export default EditarAutor;
+export default MostrarDetalleLibro;
