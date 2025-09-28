@@ -10,6 +10,7 @@ interface Params {
 const EditarAutor = async ({ params }: Params) => {
     const { id } =  params;
     const apiUrl = process.env.INTERNAL_API_URL;
+    console.log(apiUrl)
 
 
     const respuesta = await fetch(`${apiUrl}/api/books/${id}`, {

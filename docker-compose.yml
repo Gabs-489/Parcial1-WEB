@@ -1,5 +1,5 @@
 services:
-  data_base:
+  backend:
     image: bookstore  
     container_name: parcial-backend
     ports:
@@ -13,12 +13,12 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_API_URL: http://localhost:8080
-        INTERNAL_API_URL: http://data_base:8080
+        INTERNAL_API_URL: http://backend:8080
     container_name: parcial-frontend
     ports:
       - "3000:3000"
     depends_on:
-      - data_base
+      - backend
     networks:
     - app-network
 
