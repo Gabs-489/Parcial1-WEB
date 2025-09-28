@@ -50,6 +50,7 @@ const ListaAutores = () => {
                 setAutores(data);
             } catch (error) {
                 console.log(error);
+                console.log(apiUrl)
                 setError(
                     "No se pudieron cargar los servicios. Por favor, intente más tarde."
                 );
